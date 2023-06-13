@@ -34,4 +34,19 @@ app.use(
   })
 );
 
+// Middleware to parse the request body
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
+// Serve static files
+app.use(express.static(path.join(__dirname, "public")));
+
+// Home routes
+app.get("/", (req, res) => {
+  res.render("home");
+});
+
+// Start the server
+app.listen(PORT, () => {
+  console.log(`Server listening on http://localhost:${PORT}`);
+});
