@@ -1,4 +1,5 @@
 // Required packages
+require('dotenv').config();
 const path = require("path");
 const express = require("express");
 const session = require("express-session");
@@ -17,5 +18,20 @@ app.engine(
   })
 );
 app.set("view engine", "handlebars");
+
+// Middleware
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    cookie: {
+      maxAge: 3600000,
+      httpOnly: true,
+      secure: false,
+      sameSite: "strict",
+    },
+    resave: false,
+    saveUninitialized: true,
+  })
+);
 
 
