@@ -115,16 +115,20 @@ const homeController = {
     }
   },
 
-  
+  // Dashboard action
+  dashboard: async (req, res) => {
+    try {
+      // Retrieve the logged-in user's data from the database
+      const user = await User.findByPk(req.session.user_id, {
+        include: [{ model: Post }]
+      });
 
+      res.render('dashboard', { user });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+};
 
-
-
-
-
-
-
-
-
-
-    module.exports = homeController;
+module.exports = homeController;
