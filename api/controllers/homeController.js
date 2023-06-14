@@ -94,6 +94,27 @@ const homeController = {
     }
   },
 
+  // Signup action
+  signup: async (req, res) => {
+    try {
+      // Handle signup logic here
+      // Retrieve user credentials from request body
+      const { username, email, password } = req.body;
+
+      // Create a new user in the database
+      const newUser = await User.create({ username, email, password });
+
+      // Set the user's ID in the session
+      req.session.user_id = newUser.id;
+
+      // Redirect to the dashboard or any desired page
+      res.redirect('/dashboard');
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  },
+
   
 
 
