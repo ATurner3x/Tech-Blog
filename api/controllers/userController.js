@@ -46,3 +46,29 @@ const userController = {
       res.status(500).json({ error: 'Internal server error' });
     }
   },
+
+  // Action to delete a user
+  deleteUser: async (req, res) => {
+    try {
+      // Handle user deletion logic here
+      // Delete the user from the database
+      const deletedUser = await User.destroy({
+        where: { id: req.params.id }
+      });
+
+      // Check if the user was found and deleted
+      if (deletedUser === 0) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      // Send a response indicating successful user deletion
+      res.status(200).json({ message: 'User deleted successfully' });
+    } catch (error) {
+      console.error(error);
+      // Handle any errors that occur during user deletion
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  }
+};
+
+module.exports = userController;
