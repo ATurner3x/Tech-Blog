@@ -44,6 +44,25 @@ const homeController = {
     }
   },
 
+  // Add comment action
+  addComment: async (req, res) => {
+    try {
+      const { content } = req.body;
+
+      const comment = await Comment.create({
+        content,
+        user_id: req.session.user_id,
+        post_id: req.params.id
+      });
+
+      res.redirect(`/post/${req.params.id}`);
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  },
+
+  
 
 
 
