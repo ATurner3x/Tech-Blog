@@ -42,10 +42,16 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Home routes
+const homeRoutes = require("./api/routes/homeRoutes");
 app.use("/", homeRoutes);
 
 // User routes
+const userRoutes = require("./api/routes/userRoutes");
 app.use("/users", userRoutes);
+
+// Post routes
+const postRoutes = require("./api/routes/postRoutes");
+app.use("/", postRoutes);
 
 // Start the server
 app.listen(PORT, () => {
