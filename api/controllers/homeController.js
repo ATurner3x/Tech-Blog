@@ -1,4 +1,4 @@
-const { user, post, comment } = require('../../models');
+const { User, Post, Comment } = require('../../models');
 
 // Define controller actions
 const homeController = {

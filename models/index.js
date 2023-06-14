@@ -1,15 +1,16 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/connection');
 
-// Import model files
 const User = require('./user');
 const Post = require('./post');
 const Comment = require('./comment');
 
 // Initialize and associate models
-User.init(sequelize);
-Post.init(sequelize);
-Comment.init(sequelize);
+const models = [User, Post, Comment];
+
+for (const model of models) {
+  model.init(sequelize, Sequelize);
+}
 
 // Define associations
 User.hasMany(Post, {
