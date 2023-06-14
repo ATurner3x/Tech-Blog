@@ -19,3 +19,30 @@ const userController = {
       res.status(500).json({ error: 'Internal server error' });
     }
   },
+
+  // Action to update a user
+  updateUser: async (req, res) => {
+    try {
+      // Handle user update logic here
+      // Retrieve user data from the request body
+      const { username, email } = req.body;
+
+      // Update the user in the database
+      const updatedUser = await User.update(
+        { username, email },
+        { where: { id: req.params.id } }
+      );
+
+      // Check if the user was found and updated
+      if (updatedUser[0] === 0) {
+        return res.status(404).json({ error: 'User not found' });
+      }
+
+      // Send a response indicating successful user update
+      res.status(200).json({ message: 'User updated successfully' });
+    } catch (error) {
+      console.error(error);
+      // Handle any errors that occur during user update
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  },
