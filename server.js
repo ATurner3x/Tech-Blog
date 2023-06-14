@@ -42,9 +42,10 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, "public")));
 
 // Home routes
-app.get("/", (req, res) => {
-  res.render("home");
-});
+app.use("/", homeRoutes);
+
+// User routes
+app.use("/users", userRoutes);
 
 // Start the server
 app.listen(PORT, () => {
