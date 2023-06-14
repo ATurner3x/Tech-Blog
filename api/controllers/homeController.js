@@ -62,6 +62,38 @@ const homeController = {
     }
   },
 
+   // Login action
+   login: async (req, res) => {
+    try {
+      // Handle login logic here
+      // Retrieve user credentials from request body
+      const { email, password } = req.body;
+
+      // Query the database to find a matching user
+      const user = await User.findOne({ where: { email } });
+
+      if (!user) {
+        return res.render('login', { error: 'Invalid email or password' });
+      }
+
+      // Validate password
+      const validPassword = await user.checkPassword(password);
+
+      if (!validPassword) {
+        return res.render('login', { error: 'Invalid email or password' });
+      }
+
+      // Set the user's ID in the session
+      req.session.user_id = user.id;
+
+      // Redirect to the dashboard or any desired page
+      res.redirect('/dashboard');
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: 'Internal server error' });
+    }
+  },
+
   
 
 
